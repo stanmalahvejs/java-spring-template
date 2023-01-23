@@ -1,6 +1,7 @@
 plugins {
     // Apply the java Plugin to add support for Java.
     id 'java'
+    id "com.diffplug.spotless"
 }
 
 repositories {
@@ -11,6 +12,14 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+}
+
+spotless {
+    java {
+        googleJavaFormat('1.8')
+        // fix formatting of type annotations
+        formatAnnotations()
+    }
 }
 
 tasks.named('test') {
