@@ -1,11 +1,3 @@
 plugins {
     id 'com.github.stanmavs.java.spring.template.java-api-application-conventions'
 }
-
-dependencies {
-}
-
-application {
-    // Define the main class for the application.
-    mainClass = 'com.github.stanmavs.java.spring.template.foo.FooApp'
-}
