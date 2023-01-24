@@ -1,6 +1,7 @@
 plugins {
     // Apply the java Plugin to add support for Java.
     id 'java'
+    id 'jvm-test-suite'
     id "com.diffplug.spotless"
 }
 
@@ -9,19 +10,16 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    lombokVersion = "1.18.24"
+    mapstructVersion = "1.5.3.Final"
+}
+
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
-
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    compileOnly 'org.mapstruct:mapstruct:1.5.3.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-    testCompileOnly 'org.mockito:mockito-core:5.0.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:4.6.1'
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
 }
 
 spotless {
@@ -29,10 +27,43 @@ spotless {
         googleJavaFormat('1.15.0')
         // fix formatting of type annotations
         formatAnnotations()
+        toggleOffOn()
     }
 }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+
+            dependencies {
+                compileOnly "org.projectlombok:lombok:$lombokVersion"
+                annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+                compileOnly 'org.mockito:mockito-core:5.0.0'
+                implementation 'org.mockito:mockito-junit-jupiter:4.6.1'
+            }
+        }
+
+        integrationTest(JvmTestSuite) {
+            dependencies {
+                implementation project()
+                compileOnly "org.projectlombok:lombok:$lombokVersion"
+                annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+                implementation "org.springframework.boot:spring-boot-starter-test"
+                implementation "io.rest-assured:rest-assured:5.3.0"
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn(testing.suites.integrationTest)
 }
