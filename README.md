@@ -2,6 +2,8 @@
 
 Template for a Java project with Spring, built via Gradle
 
+![build status](https://github.com/stanmavs/java-spring-template/actions/workflows/ci.yml/badge.svg?branch=main)
+
 ## ToC
 
 - [Repository structure](#repository-structure)
@@ -11,6 +13,8 @@ Template for a Java project with Spring, built via Gradle
 
 ```
 .
+├── .github
+│   └── workflows // CI/CD workflows for GitHub Actions
 ├── LICENSE
 ├── README.md
 ├── buildSrc // shared build logic
