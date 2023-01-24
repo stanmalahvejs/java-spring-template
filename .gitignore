@@ -30,3 +30,6 @@ build
 
 # Ignore IDEA folder
 .idea
+
+# Ignore Gradle wrapper
+!./gradle/wrapper/gradle-wrapper.jar
