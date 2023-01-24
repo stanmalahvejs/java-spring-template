@@ -2,7 +2,7 @@
 
 Template for a Java project with Spring, built via Gradle
 
-![build status](https://github.com/stanmavs/java-spring-template/actions/workflows/push.yml/badge.svg)
+![build status](https://github.com/stanmavs/java-spring-template/actions/workflows/ci.yml/badge.svg?branch=main)
 
 ## ToC
 

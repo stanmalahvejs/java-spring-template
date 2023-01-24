@@ -1,7 +1,7 @@
 # GitHub Actions workflow, which runs on push to a branch.
 # See https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Push workflow
+name: CI workflow
 
 on: [push]
 
